@@ -1,0 +1,14 @@
+bundle:
+  name: supply-chain-demand-forecasting
+
+include:
+  - resources/*.yml
+
+sync:
+  include:
+    - notebooks/**
+    - src/**
+
+targets:
+  dev:
+    default: true

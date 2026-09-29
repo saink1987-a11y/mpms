@@ -1,0 +1,20 @@
+resources:
+  jobs:
+    supply_chain_demand_forecasting:
+      name: supply-chain-demand-forecasting
+      tasks:
+        - task_key: market_potential_and_share
+          notebook_task:
+            notebook_path: ../notebooks/01_market_potential_share.py
+            source: WORKSPACE
+            base_parameters:
+              catalog: main
+              schema: supply_chain_forecasting
+              vehicle_count: "10000"
+              part_count: "500"
+              write_delta: "false"
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
