@@ -9,7 +9,7 @@
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Unity Catalog")
+dbutils.widgets.text("catalog", "workspace", "Unity Catalog")
 dbutils.widgets.text("schema", "supply_chain_forecasting", "Schema")
 dbutils.widgets.text("experiment_path", "/Shared/supply_chain_demand_forecasting", "MLflow experiment")
 

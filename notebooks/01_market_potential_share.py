@@ -40,7 +40,7 @@ from supply_chain_forecasting.synthetic_data import build_synthetic_sources
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Unity Catalog")
+dbutils.widgets.text("catalog", "workspace", "Unity Catalog")
 dbutils.widgets.text("schema", "supply_chain_forecasting", "Schema")
 dbutils.widgets.text("vehicle_count", "10000", "Synthetic vehicles")
 dbutils.widgets.text("part_count", "500", "Synthetic parts")
@@ -145,6 +145,21 @@ if write_delta:
     gold_metrics.write.format("delta").mode("overwrite").saveAsTable(
         f"{catalog}.{schema}.gold_market_potential_share"
     )
+    parts.write.format("delta").mode("overwrite").saveAsTable(
+        f"{catalog}.{schema}.bronze_parts_master"
+    )
+    vehicles.write.format("delta").mode("overwrite").saveAsTable(
+        f"{catalog}.{schema}.bronze_vedoc_vehicles"
+    )
+    vpm.write.format("delta").mode("overwrite").saveAsTable(
+        f"{catalog}.{schema}.bronze_vpm_fleet"
+    )
+    fitment_rules.write.format("delta").mode("overwrite").saveAsTable(
+        f"{catalog}.{schema}.silver_fitment_rules"
+    )
+    replacement_rates.write.format("delta").mode("overwrite").saveAsTable(
+        f"{catalog}.{schema}.silver_replacement_rates"
+    )
     claims.write.format("delta").mode("overwrite").saveAsTable(
         f"{catalog}.{schema}.silver_claims"
     )
@@ -154,6 +169,24 @@ if write_delta:
 
 # COMMAND ----------
 
+registered_table_names = [
+    "bronze_parts_master",
+    "bronze_vedoc_vehicles",
+    "bronze_vpm_fleet",
+    "silver_fitment_rules",
+    "silver_parts_applicability",
+    "silver_replacement_rates",
+    "silver_claims",
+    "silver_sales",
+    "gold_market_potential_share",
+]
+registered_row_counts = {}
+if write_delta:
+    for table_name in registered_table_names:
+        qualified_name = f"{catalog}.{schema}.{table_name}"
+        registered_row_counts[table_name] = spark.table(qualified_name).count()
+        print(f"{qualified_name}: {registered_row_counts[table_name]:,} rows")
+
 applicable.explain(mode="formatted")
 print("Workflow complete. Timings are specific to the current run and cluster.")
 dbutils.notebook.exit(
@@ -162,6 +195,9 @@ dbutils.notebook.exit(
             "status": "success",
             "benchmark": benchmark,
             "delta_tables_written": write_delta,
+            "target_schema": f"{catalog}.{schema}",
+            "registered_tables": registered_table_names if write_delta else [],
+            "registered_row_counts": registered_row_counts,
         }
     )
 )

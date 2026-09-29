@@ -18,7 +18,7 @@ The processing code is structured for Spark and Delta Lake. Source-shaped synthe
 
 1. Use the Databricks CLI with an authenticated profile, then validate the bundle: `databricks bundle validate -t dev`.
 2. Deploy and run the workflow: `databricks bundle deploy -t dev`, then `databricks bundle run supply_chain_demand_forecasting -t dev`.
-3. For interactive exploration, open `notebooks/01_market_potential_share.py` in the workspace and run it on approved compute. Set catalog/schema widgets to a namespace where you have permission. Delta writes default off.
+3. The deployed workflow targets `workspace.supply_chain_forecasting` and writes synthetic Delta tables. For an interactive run, choose a catalog/schema where you have permission and review the synthetic-data labels before sharing results.
 4. To forecast, create `gold_monthly_part_market_demand` with `series_id STRING`, `ds TIMESTAMP` aligned to month end, and `y_demand DOUBLE`, then run the second notebook on a runtime supported by the current MMF project.
 
 No credentials, tokens, endpoints, or real customer data belong in this repository. The Asset Bundle uses the active Databricks CLI authentication.
@@ -45,3 +45,5 @@ The notebook times both strategies on the same bounded sample (default up to 5,0
 - [Many Model Forecasting](https://github.com/databricks-industry-solutions/many-model-forecasting)
 - [Supply Chain Stress Test](https://github.com/databricks-industry-solutions/supply-chain-stress-test)
 - [Automotive Lakehouse Data Models](https://github.com/databricks-industry-solutions/lakehouse-industry-data-models/tree/main/data-models/automotive)
+
+Stakeholder-ready technical and business framing is in [`docs/business-and-technical-overview.md`](docs/business-and-technical-overview.md).

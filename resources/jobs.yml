@@ -8,11 +8,11 @@ resources:
             notebook_path: ../notebooks/01_market_potential_share.py
             source: WORKSPACE
             base_parameters:
-              catalog: main
+              catalog: workspace
               schema: supply_chain_forecasting
               vehicle_count: "10000"
               part_count: "500"
-              write_delta: "false"
+              write_delta: "true"
           environment_key: default
       environments:
         - environment_key: default
