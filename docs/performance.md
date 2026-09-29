@@ -19,11 +19,11 @@ Databricks serverless run, synthetic input, 2026-09-29:
 | Unique vehicle/part matches | 194,173 |
 | Candidate reduction | 90.29% |
 | Result mismatches, either direction | 0 |
-| Rule-based path elapsed | 1.146s |
-| Forced cross-join baseline elapsed | 1.043s |
+| Rule-based path elapsed | 2.047s |
+| Forced cross-join baseline elapsed | 1.429s |
 | Delta tables written | No |
 
-This run demonstrates a substantial reduction in candidate combinations and exact result parity, but it does **not** demonstrate a wall-clock speedup. On this sample, the rule-based path was about 10% slower than the bounded baseline. Do not claim a runtime improvement from this result. Further tuning and representative benchmarks are required before making a latency or cost claim.
+This run demonstrates a substantial reduction in candidate combinations and exact result parity, but it does **not** demonstrate a wall-clock speedup. On this sample, the rule-based path was about 43% slower than the bounded baseline. Do not claim a runtime improvement from this result. Further tuning and representative benchmarks are required before making a latency or cost claim.
 
 ## Before presenting production performance
 
